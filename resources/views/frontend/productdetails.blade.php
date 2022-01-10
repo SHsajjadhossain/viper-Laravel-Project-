@@ -74,8 +74,13 @@
                                     Cart</button>
                             </div>
                             @auth
+                            {{-- style="color: #fb5d5d" --}}
                                 <div class="pro-details-compare-wishlist pro-details-wishlist ">
-                                    <a href="{{ url('add/wishlist') }}"><i class="pe-7s-like"></i></a>
+                                    @if ($wishlist_status)
+                                        <a href="{{ route('wishlist.remove', $wishlist_id) }}"><i class="fa fa-heart" style="color: #fb5d5d"></i></a>
+                                    @else
+                                        <a href="{{ route('wishlist.insert', $single_product_info->id) }}"><i class="fa fa-heart-o"></i></a>
+                                    @endif
                                 </div>
                             @endauth
 

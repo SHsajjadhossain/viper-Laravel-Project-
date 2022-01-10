@@ -71,6 +71,12 @@
                         <!--<li class="menu-title">Navigation</li>-->
 
                         <li>
+                            <a href="{{ route('frontend') }}">
+                                <i class="fa fa-globe"></i> <span> Visit Website </span>
+                            </a>
+                        </li>
+
+                        <li>
                             <a href="{{ route('home') }}">
                                 <i class="fi-air-play"></i> <span> Home </span>
                             </a>
@@ -325,8 +331,13 @@
                                 </div>
 
                                 <!-- item-->
+
                                 <a href="{{ route('profile') }}" class="dropdown-item notify-item">
                                     <i class="fi-head"></i> <span>My Profile</span>
+                                </a>
+
+                                <a href="{{ route('frontend') }}" class="dropdown-item notify-item">
+                                    <i class="fa fa-globe"></i> <span> Visit Website </span>
                                 </a>
 
                                 <!-- item-->

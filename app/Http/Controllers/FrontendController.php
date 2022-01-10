@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Wishlist;
 use Illuminate\Http\Request;
 
 class FrontendController extends Controller
@@ -18,10 +19,19 @@ class FrontendController extends Controller
     }
 
     public function productdetails($slug){
+        $wishlist_status = Wishlist::where('user_id', auth()->id())->where('product_id', Product::where('product_slug', $slug)->first()->id)->exists();
+        if ($wishlist_status) {
+            $wishlist_id = Wishlist::where('user_id', auth()->id())->where('product_id', Product::where('product_slug', $slug)->first()->id)->first()->id;
+        }
+        else {
+            $wishlist_id = "";
+        }
         $related_products = Product::where('product_slug', '!=', $slug)->where('category_id', Product::where('product_slug', $slug)->firstOrFail()->category_id)->get();
         return view('frontend.productdetails', [
            'single_product_info' => Product::where('product_slug', $slug)->firstOrFail(),
-           'related_products' => $related_products
+           'related_products' => $related_products,
+            'wishlist_status' => $wishlist_status,
+            'wishlist_id' => $wishlist_id
         ]);
     }
 
