@@ -171,33 +171,20 @@
             </div>
             <div class="body customScroll">
                 <ul class="minicart-product-list">
-                    <li>
-                        <a href="single-product.html" class="image"><img src="{{ asset('frontend') }}/assets/images/product-image/1.jpg"
-                                alt="Cart product Image"></a>
-                        <div class="content">
-                            <a href="single-product.html" class="title">Women's Elizabeth Coat</a>
-                            <span class="quantity-price">1 x <span class="amount">$21.86</span></span>
-                            <a href="#" class="remove">×</a>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="single-product.html" class="image"><img src="{{ asset('frontend') }}/assets/images/product-image/2.jpg"
-                                alt="Cart product Image"></a>
-                        <div class="content">
-                            <a href="single-product.html" class="title">Long sleeve knee length</a>
-                            <span class="quantity-price">1 x <span class="amount">$13.28</span></span>
-                            <a href="#" class="remove">×</a>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="single-product.html" class="image"><img src="{{ asset('frontend') }}/assets/images/product-image/3.jpg"
-                                alt="Cart product Image"></a>
-                        <div class="content">
-                            <a href="single-product.html" class="title">Cool Man Wearing Leather</a>
-                            <span class="quantity-price">1 x <span class="amount">$17.34</span></span>
-                            <a href="#" class="remove">×</a>
-                        </div>
-                    </li>
+                    @forelse (App\Models\Wishlist::where('user_id', auth()->id())->get() as $wishlist)
+                        <li>
+                            <a href="single-product.html" class="image"><img src="{{ asset('uploads/product_photoes') }}/{{ App\Models\Product::find($wishlist->product_id)->product_photo }}"
+                                alt="Cart product Image">
+                            </a>
+                            <div class="content">
+                                <a href="single-product.html" class="title">{{ App\Models\Product::find($wishlist->product_id)->product_name }}</a>
+                                <span class="quantity-price"> <span class="amount">${{ App\Models\Product::find($wishlist->product_id)->product_price }}</span></span>
+                                <a href="{{ route('wishlist.remove', $wishlist->id) }}" class="remove">×</a>
+                            </div>
+                        </li>
+                    @empty
+                        <li>No Product To Show</li>
+                    @endforelse
                 </ul>
             </div>
             <div class="foot">

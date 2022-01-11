@@ -9,7 +9,14 @@
                 <span class="new">New</span>
             </span>
             <div class="actions">
-                <a href="wishlist.html" class="action wishlist" title="Wishlist"><i class="pe-7s-like"></i></a>
+
+                {{-- @if ($wishlist_status)
+                    <a href="{{ route('wishlist.remove', $wishlist_id) }}"><i class="fa fa-heart" style="color: #fb5d5d"></i></a>
+                @else
+                @endif --}}
+                    {{-- <a href="{{ route('wishlist.insert', $product->id) }}"><i class="fa fa-heart-o"></i></a> --}}
+
+                <a href="#" class="action wishlist" title="Wishlist"><i class="pe-7s-like"></i></a>
                 <a href="#" class="action quickview" data-link-action="quickview" title="Quick view"
                     data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="pe-7s-search"></i></a>
                 <a href="compare.html" class="action compare" title="Compare"><i class="pe-7s-refresh-2"></i></a>

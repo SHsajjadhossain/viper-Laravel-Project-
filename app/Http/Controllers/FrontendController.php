@@ -14,7 +14,7 @@ class FrontendController extends Controller
         $allproducts = Product::all();
          return view('frontend.index', [
              'categories' => Category::where('status', 'show')->get(),
-             'allproducts' => $allproducts
+             'allproducts' => $allproducts,
          ]);
     }
 

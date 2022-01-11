@@ -102,11 +102,11 @@
                             </ul>
                         </div>
                         <div class="pro-details-categories-info pro-details-same-style d-flex">
-                            <span>Categories: </span>
+                            <span>Category: </span>
                             <ul class="d-flex">
                                 <li>
                                     <a href="{{ route('categorywiseproducts', $single_product_info->category_id) }}">
-                                        {{ App\Models\Category::find($single_product_info->category_id)->category_name }}
+                                        {{ $single_product_info->relationtocategory->category_name }}
                                     </a>
                                 </li>
                             </ul>
