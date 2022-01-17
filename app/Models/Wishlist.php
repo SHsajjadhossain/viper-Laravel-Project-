@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Wishlist extends Model
 {
     use HasFactory;
+    function relationtoproduct(){
+        return $this->hasOne(Product::class, 'id', 'product_id');
+    }
 }

@@ -9,14 +9,15 @@
                 <span class="new">New</span>
             </span>
             <div class="actions">
-
-                {{-- @if ($wishlist_status)
-                    <a href="{{ route('wishlist.remove', $wishlist_id) }}"><i class="fa fa-heart" style="color: #fb5d5d"></i></a>
+                @auth
+                    @if (wishlistcheck($product->id))
+                        <a href="{{ route('wishlist.remove', wishlist_id($product->id)) }}" class="action quickview"><i class="fa fa-heart" style="color: #fb5d5d; "></i></a>
+                    @else
+                        <a href="{{ route('wishlist.insert', $product->id) }}" class="action quickview"><i class="fa fa-heart-o" ></i></a>
+                    @endif
                 @else
-                @endif --}}
-                    {{-- <a href="{{ route('wishlist.insert', $product->id) }}"><i class="fa fa-heart-o"></i></a> --}}
-
-                <a href="#" class="action wishlist" title="Wishlist"><i class="pe-7s-like"></i></a>
+                    <a class="action quickview" href="#" data-bs-toggle="modal" data-bs-target="#loginActive" title="Wishlist"><i class="fa fa-heart-o"></i></a>
+                @endauth
                 <a href="#" class="action quickview" data-link-action="quickview" title="Quick view"
                     data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="pe-7s-search"></i></a>
                 <a href="compare.html" class="action compare" title="Compare"><i class="pe-7s-refresh-2"></i></a>

@@ -5,11 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class Cart extends Model
 {
     use HasFactory;
-    function relationtocategory(){
-        return $this->hasOne(Category::class, 'id', 'category_id');
+    function relationtoproduct(){
+        return $this->hasOne(Product::class, 'id', 'product_id');
     }
-
 }

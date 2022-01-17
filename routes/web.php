@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\{ProfileController, CategoryController, FrontendController, VendorController, ProductController, WishlistController};
+use App\Http\Controllers\{ProfileController, CategoryController, FrontendController, VendorController, ProductController, WishlistController, CartController};
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -37,4 +37,5 @@ Route::resource('product', ProductController::class);
 Route::resource('wishlist', WishlistController::class);
 Route::get('/wishlist/insert/{product_id}', [WishlistController::class, 'insert'])->name('wishlist.insert');
 Route::get('/wishlist/remove/{wishlist_id}', [WishlistController::class, 'remove'])->name('wishlist.remove');
+Route::get('/addtocartwish/{wishlist_id}', [CartController::class, 'addtocartwish'])->name('addtocartwish');
 

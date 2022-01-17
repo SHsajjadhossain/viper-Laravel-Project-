@@ -1,4 +1,7 @@
 @extends('layouts.app_frontend')
+@section('og_image')
+<meta property="og:image" content="{{ asset('uploads/product_photoes') }}/{{ $single_product_info->product_photo }}">
+@endsection
 @section('content')
     <!-- breadcrumb-area start -->
     <div class="breadcrumb-area">

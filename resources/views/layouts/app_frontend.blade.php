@@ -10,6 +10,7 @@
     <meta name="robots" content="index, follow" />
     <title>Jesco - Fashoin eCommerce HTML Template</title>
     <meta name="description" content="Jesco - Fashoin eCommerce HTML Template" />
+    @yield('og_image')
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
     <!-- Add site Favicon -->
@@ -146,7 +147,7 @@
                             <a href="#offcanvas-cart"
                                 class="header-action-btn header-action-btn-cart offcanvas-toggle pr-0">
                                 <i class="pe-7s-shopbag"></i>
-                                <span class="header-action-num">01</span>
+                                <span class="header-action-num">{{ totalcart() }}</span>
                                 <!-- <span class="cart-amount">€30.00</span> -->
                             </a>
                             <a href="#offcanvas-mobile-menu"
@@ -171,7 +172,7 @@
             </div>
             <div class="body customScroll">
                 <ul class="minicart-product-list">
-                    @forelse (App\Models\Wishlist::where('user_id', auth()->id())->get() as $wishlist)
+                    @forelse (allwishlists() as $wishlist)
                         <li>
                             <a href="single-product.html" class="image"><img src="{{ asset('uploads/product_photoes') }}/{{ App\Models\Product::find($wishlist->product_id)->product_photo }}"
                                 alt="Cart product Image">
@@ -189,7 +190,7 @@
             </div>
             <div class="foot">
                 <div class="buttons">
-                    <a href="wishlist.html" class="btn btn-dark btn-hover-primary mt-30px">view wishlist</a>
+                    <a href="{{ route('wishlist.index') }}" class="btn btn-dark btn-hover-primary mt-30px">view wishlist</a>
                 </div>
             </div>
         </div>
@@ -204,33 +205,20 @@
             </div>
             <div class="body customScroll">
                 <ul class="minicart-product-list">
-                    <li>
-                        <a href="single-product.html" class="image"><img src="{{ asset('frontend') }}/assets/images/product-image/1.jpg"
-                                alt="Cart product Image"></a>
-                        <div class="content">
-                            <a href="single-product.html" class="title">Women's Elizabeth Coat</a>
-                            <span class="quantity-price">1 x <span class="amount">$18.86</span></span>
-                            <a href="#" class="remove">×</a>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="single-product.html" class="image"><img src="{{ asset('frontend') }}/assets/images/product-image/2.jpg"
-                                alt="Cart product Image"></a>
-                        <div class="content">
-                            <a href="single-product.html" class="title">Long sleeve knee length</a>
-                            <span class="quantity-price">1 x <span class="amount">$43.28</span></span>
-                            <a href="#" class="remove">×</a>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="single-product.html" class="image"><img src="{{ asset('frontend') }}/assets/images/product-image/3.jpg"
-                                alt="Cart product Image"></a>
-                        <div class="content">
-                            <a href="single-product.html" class="title">Cool Man Wearing Leather</a>
-                            <span class="quantity-price">1 x <span class="amount">$37.34</span></span>
-                            <a href="#" class="remove">×</a>
-                        </div>
-                    </li>
+                    @forelse (allcartts() as $cart)
+                        <li>
+                            <a href="single-product.html" class="image"><img src="{{ asset('uploads/product_photoes') }}/{{ $cart->relationtoproduct->product_photo }}"
+                                    alt="Cart product Image"></a>
+                            <div class="content">
+                                <a href="single-product.html" class="title">{{ $cart->relationtoproduct->product_name }}</a>
+                                <span class="quantity-price">{{ $cart->amount }} x <span class="amount">${{ $cart->relationtoproduct->product_price }}</span></span>
+                                <span>${{ $cart->amount * $cart->relationtoproduct->product_price }}</span>
+                                <a href="#" class="remove">×</a>
+                            </div>
+                        </li>
+                    @empty
+
+                    @endforelse
                 </ul>
             </div>
             <div class="foot">
