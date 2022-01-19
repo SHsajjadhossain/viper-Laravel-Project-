@@ -64,7 +64,8 @@ class ProductController extends Controller
             'product_short_description' => $request->product_short_description,
             'product_long_description' => $request->product_long_description,
             'product_photo' => $new_product_photo_name,
-            'product_slug' => $slug
+            'product_slug' => $slug,
+            'product_quantity' => $request->product_quantity
         ]);
 
         foreach ($request->file('product_thumbnails') as  $product_thumbnail) {

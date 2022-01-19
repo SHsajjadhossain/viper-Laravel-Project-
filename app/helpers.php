@@ -1,5 +1,9 @@
 <?php
 // wishlists function start
+
+use App\Models\Product;
+use App\Models\User;
+
 function allwishlists(){
     return App\Models\Wishlist::where('user_id', auth()->id())->get();
 }
@@ -23,6 +27,11 @@ function allcartts()
 function totalcart()
 {
     return App\Models\Cart::where('user_id', auth()->id())->count();
+}
+
+function getvendor($product_id)
+{
+    return User::find(Product::find($product_id)->user_id)->name;
 }
 
 // carts function end

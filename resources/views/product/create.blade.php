@@ -52,6 +52,11 @@
                                 placeholder="Enter Product Code">
                         </div>
                         <div class="form-group">
+                            <label>Product Quantity</label>
+                            <input type="text" class="form-control" name="product_quantity"
+                                placeholder="Enter Product Quantity">
+                        </div>
+                        <div class="form-group">
                             <label>Product Short Description</label>
                             <textarea name="product_short_description" class="form-control"  rows="2"></textarea>
                         </div>

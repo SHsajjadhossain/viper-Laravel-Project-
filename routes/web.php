@@ -38,4 +38,8 @@ Route::resource('wishlist', WishlistController::class);
 Route::get('/wishlist/insert/{product_id}', [WishlistController::class, 'insert'])->name('wishlist.insert');
 Route::get('/wishlist/remove/{wishlist_id}', [WishlistController::class, 'remove'])->name('wishlist.remove');
 Route::get('/addtocartwish/{wishlist_id}', [CartController::class, 'addtocartwish'])->name('addtocartwish');
+Route::post('/add/to/cart/{product_id}', [CartController::class, 'addtocart'])->name('addtocart');
+Route::get('/cart/remove/{cart_id}', [CartController::class, 'cartremove'])->name('cartremove');
+Route::get('/cart', [CartController::class, 'cart'])->name('cart');
+Route::get('/clear/shopping/cart/{user_id}', [CartController::class, 'clearshoppingcart'])->name('clearshoppingcart');
 

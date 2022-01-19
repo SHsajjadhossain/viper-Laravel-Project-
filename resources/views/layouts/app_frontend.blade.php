@@ -213,7 +213,7 @@
                                 <a href="single-product.html" class="title">{{ $cart->relationtoproduct->product_name }}</a>
                                 <span class="quantity-price">{{ $cart->amount }} x <span class="amount">${{ $cart->relationtoproduct->product_price }}</span></span>
                                 <span>${{ $cart->amount * $cart->relationtoproduct->product_price }}</span>
-                                <a href="#" class="remove">×</a>
+                                <a href="{{ route('cartremove', $cart->id) }}" class="remove">×</a>
                             </div>
                         </li>
                     @empty
@@ -223,8 +223,7 @@
             </div>
             <div class="foot">
                 <div class="buttons mt-30px">
-                    <a href="cart.html" class="btn btn-dark btn-hover-primary mb-30px">view cart</a>
-                    <a href="checkout.html" class="btn btn-outline-dark current-btn">checkout</a>
+                    <a href="{{ route('cart') }}" class="btn btn-dark btn-hover-primary mb-30px">view cart</a>
                 </div>
             </div>
         </div>

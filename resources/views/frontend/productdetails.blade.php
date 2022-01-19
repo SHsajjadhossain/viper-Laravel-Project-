@@ -68,39 +68,51 @@
                             <span class="read-review"><a class="reviews" href="#">( 5 Customer Review )</a></span>
                         </div>
                         <p class="mt-30px mb-0">{{ $single_product_info->product_short_description }}</p>
-                        <div class="pro-details-quality">
-                            <div class="cart-plus-minus">
-                                <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1" />
-                            </div>
-                            <div class="pro-details-cart">
-                                <button class="add-cart" href="#"> Add To
-                                    Cart</button>
-                            </div>
-                            @auth
-                            {{-- style="color: #fb5d5d" --}}
-                                <div class="pro-details-compare-wishlist pro-details-wishlist ">
-                                    @if ($wishlist_status)
-                                        <a href="{{ route('wishlist.remove', $wishlist_id) }}"><i class="fa fa-heart" style="color: #fb5d5d"></i></a>
-                                    @else
-                                        <a href="{{ route('wishlist.insert', $single_product_info->id) }}"><i class="fa fa-heart-o"></i></a>
-                                    @endif
-                                </div>
-                            @endauth
 
-                            @guest
-                                <div class="pro-details-compare-wishlist pro-details-wishlist ">
-                                    <a href="#" data-bs-toggle="modal" data-bs-target="#loginActive"><i class="pe-7s-like"></i></a>
+                        <form action="{{ route('addtocart', $single_product_info->id) }}" method="POST">
+                            @csrf
+                            <div class="pro-details-quality">
+                                <div class="cart-plus-minus">
+                                    <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1" />
                                 </div>
-                            @endguest
-                            <div class="pro-details-compare-wishlist pro-details-compare">
-                                <a href="compare.html"><i class="pe-7s-refresh-2"></i></a>
+                                <div class="pro-details-cart">
+                                    <button class="add-cart" type="submit"> Add To
+                                        Cart</button>
                             </div>
+                        </form>
+                                @auth
+                                {{-- style="color: #fb5d5d" --}}
+                                    <div class="pro-details-compare-wishlist pro-details-wishlist ">
+                                        @if ($wishlist_status)
+                                            <a href="{{ route('wishlist.remove', $wishlist_id) }}"><i class="fa fa-heart" style="color: #fb5d5d"></i></a>
+                                        @else
+                                            <a href="{{ route('wishlist.insert', $single_product_info->id) }}"><i class="fa fa-heart-o"></i></a>
+                                        @endif
+                                    </div>
+                                @endauth
+
+                                @guest
+                                    <div class="pro-details-compare-wishlist pro-details-wishlist ">
+                                        <a href="#" data-bs-toggle="modal" data-bs-target="#loginActive"><i class="pe-7s-like"></i></a>
+                                    </div>
+                                @endguest
+                                <div class="pro-details-compare-wishlist pro-details-compare">
+                                    <a href="compare.html"><i class="pe-7s-refresh-2"></i></a>
+                                </div>
+                            </div>
+                        <div class="pro-details-categories-info pro-details-same-style d-flex">
+                            <span>Available Stock : </span>
+                            <ul class="d-flex">
+                                <li>
+                                    <a>{{ $single_product_info->product_quantity}}</a>
+                                </li>
+                            </ul>
                         </div>
                         <div class="pro-details-sku-info pro-details-same-style  d-flex">
                             <span>SKU: </span>
                             <ul class="d-flex">
                                 <li>
-                                    <a href="#">{{ $single_product_info->product_code }}</a>
+                                    <a>{{ $single_product_info->product_code }}</a>
                                 </li>
                             </ul>
                         </div>

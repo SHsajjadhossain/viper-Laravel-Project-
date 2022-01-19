@@ -24,6 +24,7 @@ class CreateProductsTable extends Migration
             $table->longtext('product_long_description');
             $table->string('product_photo');
             $table->longtext('product_slug');
+            $table->integer('product_quantity');
             $table->timestamps();
         });
     }
