@@ -33,6 +33,9 @@
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/vendor/vendor.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/plugins/plugins.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/style.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/assets/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('dashboard/assets/plugins/select2/css/select2.min.css') }}">
+
 
     <!-- Main Style -->
     <!-- <link rel="stylesheet" href="assets/css/style.css" /> -->
@@ -207,17 +210,19 @@
                 <ul class="minicart-product-list">
                     @forelse (allcartts() as $cart)
                         <li>
-                            <a href="single-product.html" class="image"><img src="{{ asset('uploads/product_photoes') }}/{{ $cart->relationtoproduct->product_photo }}"
+                            <a href="{{ route('cart') }}" class="image"><img src="{{ asset('uploads/product_photoes') }}/{{ $cart->relationtoproduct->product_photo }}"
                                     alt="Cart product Image"></a>
                             <div class="content">
-                                <a href="single-product.html" class="title">{{ $cart->relationtoproduct->product_name }}</a>
+                                <a href="{{ route('cart') }}" class="title">{{ $cart->relationtoproduct->product_name }}</a>
                                 <span class="quantity-price">{{ $cart->amount }} x <span class="amount">${{ $cart->relationtoproduct->product_price }}</span></span>
                                 <span>${{ $cart->amount * $cart->relationtoproduct->product_price }}</span>
                                 <a href="{{ route('cartremove', $cart->id) }}" class="remove">×</a>
                             </div>
                         </li>
                     @empty
-
+                       <div class="text-danger">
+                          <p>No product to show</p>
+                       </div>
                     @endforelse
                 </ul>
             </div>
@@ -672,27 +677,29 @@
     <!-- Global Vendor, plugins JS -->
 
     <!-- Vendor JS -->
-    <!-- <script src="assets/js/vendor/jquery-3.6.0.min.js"></script>
+    <script src="assets/js/vendor/jquery-3.6.0.min.js"></script>
     <script src="assets/js/vendor/bootstrap.bundle.min.js"></script>
     <script src="assets/js/vendor/jquery-migrate-3.3.2.min.js"></script>
-    <script src="assets/js/vendor/modernizr-3.11.2.min.js"></script> -->
+    <script src="assets/js/vendor/modernizr-3.11.2.min.js"></script>
 
     <!--Plugins JS-->
-    <!-- <script src="assets/js/plugins/swiper-bundle.min.js"></script>
+    <script src="assets/js/plugins/swiper-bundle.min.js"></script>
     <script src="assets/js/plugins/jquery-ui.min.js"></script>
     <script src="assets/js/plugins/jquery.nice-select.min.js"></script>
     <script src="assets/js/plugins/countdown.js"></script>
     <script src="assets/js/plugins/scrollup.js"></script>
     <script src="assets/js/plugins/jquery.zoom.min.js"></script>
     <script src="assets/js/plugins/venobox.min.js"></script>
-    <script src="assets/js/plugins/ajax-mail.js"></script> -->
+    <script src="assets/js/plugins/ajax-mail.js"></script>
 
     <!-- Use the minified version files listed below for better performance and remove the files listed above -->
     <script src="{{ asset('frontend/assets/js/vendor/vendor.min.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/plugins/plugins.min.js') }}"></script>
+    <script src="{{ asset('dashboard/assets/plugins/select2/js/select2.min.js') }}"></script>
 
     <!-- Main Js -->
     <script src="{{ asset('frontend/assets/js/main.js') }}"></script>
+    @yield('footer_script')
 </body>
 
 

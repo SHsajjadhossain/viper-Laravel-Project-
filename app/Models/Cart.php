@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Cart extends Model
 {
     use HasFactory;
+    protected $fillable = ['amount'];
     function relationtoproduct(){
         return $this->hasOne(Product::class, 'id', 'product_id');
     }

@@ -34,5 +34,10 @@ function getvendor($product_id)
     return User::find(Product::find($product_id)->user_id)->name;
 }
 
+function available_quantity($product_id)
+{
+    return Product::find($product_id)->product_quantity;
+}
+
 // carts function end
 

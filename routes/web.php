@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\{ProfileController, CategoryController, FrontendController, VendorController, ProductController, WishlistController, CartController};
+use App\Http\Controllers\{CheckoutController, ProfileController, CategoryController, FrontendController, VendorController, ProductController, WishlistController, CartController, CouponController};
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -35,6 +35,7 @@ Route::resource('category', CategoryController::class);
 Route::resource('vendor', VendorController::class);
 Route::resource('product', ProductController::class);
 Route::resource('wishlist', WishlistController::class);
+Route::resource('coupon', CouponController::class);
 Route::get('/wishlist/insert/{product_id}', [WishlistController::class, 'insert'])->name('wishlist.insert');
 Route::get('/wishlist/remove/{wishlist_id}', [WishlistController::class, 'remove'])->name('wishlist.remove');
 Route::get('/addtocartwish/{wishlist_id}', [CartController::class, 'addtocartwish'])->name('addtocartwish');
@@ -42,4 +43,6 @@ Route::post('/add/to/cart/{product_id}', [CartController::class, 'addtocart'])->
 Route::get('/cart/remove/{cart_id}', [CartController::class, 'cartremove'])->name('cartremove');
 Route::get('/cart', [CartController::class, 'cart'])->name('cart');
 Route::get('/clear/shopping/cart/{user_id}', [CartController::class, 'clearshoppingcart'])->name('clearshoppingcart');
-
+Route::post('/cart/update', [CartController::class, 'cartupdate'])->name('cartupdate');
+Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
+Route::post('/checkout', [CheckoutController::class, 'checkout_post'])->name('checkout_post');

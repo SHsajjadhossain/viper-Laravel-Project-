@@ -50,6 +50,11 @@
                     </div>
                 </div>
                 <div class="col-lg-6 col-sm-12 col-xs-12" data-aos="fade-up" data-aos-delay="200">
+                    @if (session('stockout'))
+                        <div class="alert alert-danger">
+                            {{ session('stockout') }}
+                        </div>
+                    @endif
                     <div class="product-details-content quickview-content">
                         <h2>{{ $single_product_info->product_name }}</h2>
                         <div class="pricing-meta">
@@ -69,17 +74,21 @@
                         </div>
                         <p class="mt-30px mb-0">{{ $single_product_info->product_short_description }}</p>
 
-                        <form action="{{ route('addtocart', $single_product_info->id) }}" method="POST">
-                            @csrf
-                            <div class="pro-details-quality">
-                                <div class="cart-plus-minus">
-                                    <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1" />
-                                </div>
-                                <div class="pro-details-cart">
-                                    <button class="add-cart" type="submit"> Add To
+
+                            <form action="{{ route('addtocart', $single_product_info->id) }}" method="POST">
+                                @csrf
+                                <div class="pro-details-quality">
+                                    <div class="cart-plus-minus">
+                                        <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1" />
+                                    </div>
+                                    <div class="pro-details-cart">
+                                        <button class="add-cart" type="submit"> Add To
                                         Cart</button>
-                            </div>
-                        </form>
+                                    </div>
+                            </form>
+
+
+
                                 @auth
                                 {{-- style="color: #fb5d5d" --}}
                                     <div class="pro-details-compare-wishlist pro-details-wishlist ">
@@ -103,9 +112,16 @@
                         <div class="pro-details-categories-info pro-details-same-style d-flex">
                             <span>Available Stock : </span>
                             <ul class="d-flex">
+                              @if ($single_product_info->product_quantity > 0)
                                 <li>
                                     <a>{{ $single_product_info->product_quantity}}</a>
                                 </li>
+                              @else
+                              <li>
+                                    <a class="text-danger">Stockout</a>
+                                </li>
+                              @endif
+
                             </ul>
                         </div>
                         <div class="pro-details-sku-info pro-details-same-style  d-flex">

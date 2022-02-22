@@ -94,6 +94,15 @@
                         </li>
 
                         <li>
+                            <a href="javascript: void(0);"><i class="fa fa-list-alt" aria-hidden="true"></i><span> Coupon </span> <span
+                                    class="menu-arrow"></span></a>
+                            <ul class="nav-second-level" aria-expanded="false">
+                                <li><a href="{{ route('coupon.create') }}">Add Coupon</a></li>
+                                <li><a href="{{ route('coupon.index') }}">List Coupon</a></li>
+                            </ul>
+                        </li>
+
+                        <li>
                             <a href="javascript: void(0);"><i class="fa fa-cubes"></i><span> Category </span> <span
                                     class="menu-arrow"></span></a>
                             <ul class="nav-second-level" aria-expanded="false">

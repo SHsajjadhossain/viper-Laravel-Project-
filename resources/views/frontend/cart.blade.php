@@ -26,14 +26,12 @@
             <h3 class="cart-page-title">Your cart items</h3>
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-                    <form action="#">
                         <div class="table-content table-responsive cart-table-content">
                             <table>
                                 <thead>
                                     <tr>
                                         <th>Image</th>
                                         <th>Product Name</th>
-
                                         <th>Unit Price</th>
                                         <th>Qty</th>
                                         <th>Subtotal</th>
@@ -41,6 +39,12 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <form action="{{ route('cartupdate') }}" method="POST">
+                                        @csrf
+                                    @php
+                                        $cart_total = 0;
+                                        $flag = false;
+                                    @endphp
                                     @forelse (allcartts() as $cart)
                                         <tr>
                                             <td class="product-thumbnail">
@@ -52,16 +56,38 @@
                                                     {{ $cart->relationtoproduct->product_name }}
                                                 <br>
                                                     Brand Name : {{ getvendor($cart->product_id) }}
+                                                <br>
+                                                    Status :
+                                                    @if ($cart->amount > available_quantity($cart->product_id))
+                                                        @php
+                                                            $flag = true;
+                                                        @endphp
+                                                        <span class="text-danger">Stock Out</span>
+                                                    @else
+                                                        Available
+                                                    @endif
                                                 </a>
                                             </td>
                                             <td class="product-price-cart"><span class="amount">${{ $cart->relationtoproduct->product_price }}</span></td>
                                             <td class="product-quantity">
                                                 <div class="cart-plus-minus">
-                                                    <input class="cart-plus-minus-box" type="text" name="qtybutton"
+                                                    <input class="cart-plus-minus-box" type="text" name="qtybutton[{{ $cart->id }}]"
                                                         value="{{ $cart->amount }}" />
                                                 </div>
+                                                @if (session('cart_id') == $cart->id)
+                                                    @if (session('stockout'))
+                                                        <div class="alert alert-danger">
+                                                            {{ session('stockout') }}
+                                                        </div>
+                                                    @endif
+                                                @endif
                                             </td>
-                                            <td class="product-subtotal">${{ $cart->amount * $cart->relationtoproduct->product_price }}</td>
+                                            <td class="product-subtotal">
+                                                ${{ $cart->amount * $cart->relationtoproduct->product_price }}
+                                                @php
+                                                    $cart_total += ($cart->amount * $cart->relationtoproduct->product_price);
+                                                @endphp
+                                            </td>
                                             <td class="product-remove">
                                                 <a href="{{ route('cartremove', $cart->id) }}"><i class="fa fa-times"></i></a>
                                             </td>
@@ -78,89 +104,72 @@
                             <div class="col-lg-12">
                                 <div class="cart-shiping-update-wrapper">
                                     <div class="cart-shiping-update">
-                                        <a href="#">Continue Shopping</a>
+                                        <a href="{{ route('frontend') }}">Continue Shopping</a>
                                     </div>
                                     <div class="cart-clear">
-                                        <button>Update Shopping Cart</button>
+                                        <button type="submit">Update Shopping Cart</button>
+                                        </form>
+                                        @auth
                                         <a href="{{ route('clearshoppingcart', auth()->id()) }}">Clear Shopping Cart</a>
+                                        @endauth
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </form>
                     <div class="row">
-                        <div class="col-lg-4 col-md-6 mb-lm-30px">
-                            <div class="cart-tax">
-                                <div class="title-wrap">
-                                    <h4 class="cart-bottom-title section-bg-gray">Estimate Shipping And Tax</h4>
-                                </div>
-                                <div class="tax-wrapper">
-                                    <p>Enter your destination to get a shipping estimate.</p>
-                                    <div class="tax-select-wrapper">
-                                        <div class="tax-select">
-                                            <label>
-                                                * Country
-                                            </label>
-                                            <select class="email s-email s-wid">
-                                                <option>Bangladesh</option>
-                                                <option>Albania</option>
-                                                <option>Åland Islands</option>
-                                                <option>Afghanistan</option>
-                                                <option>Belgium</option>
-                                            </select>
-                                        </div>
-                                        <div class="tax-select">
-                                            <label>
-                                                * Region / State
-                                            </label>
-                                            <select class="email s-email s-wid">
-                                                <option>Bangladesh</option>
-                                                <option>Albania</option>
-                                                <option>Åland Islands</option>
-                                                <option>Afghanistan</option>
-                                                <option>Belgium</option>
-                                            </select>
-                                        </div>
-                                        <div class="tax-select mb-25px">
-                                            <label>
-                                                * Zip/Postal Code
-                                            </label>
-                                            <input type="text" />
-                                        </div>
-                                        <button class="cart-btn-2" type="submit">Get A Quote</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 mb-lm-30px">
+                        <div class="col-lg-6 col-md-6 mb-lm-30px">
                             <div class="discount-code-wrapper">
                                 <div class="title-wrap">
                                     <h4 class="cart-bottom-title section-bg-gray">Use Coupon Code</h4>
                                 </div>
                                 <div class="discount-code">
                                     <p>Enter your coupon code if you have one.</p>
-                                    <form>
-                                        <input type="text" required="" name="name" />
-                                        <button class="cart-btn-2" type="submit">Apply Coupon</button>
-                                    </form>
+                                    @if (session('coupon_err'))
+                                        <div class="alert alert-danger">
+                                            {{ session('coupon_err') }}
+                                        </div>
+                                    @endif
+                                        <form action="">
+                                            <input type="text" name="coupon_name" value="{{ ($coupon_name)?$coupon_name:'' }}" />
+                                            <button class="cart-btn-2" type="submit">Apply Coupon</button>
+                                        </form>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-12 mt-md-30px">
+                        <div class="col-lg-6 col-md-12 mt-md-30px">
                             <div class="grand-totall">
                                 <div class="title-wrap">
                                     <h4 class="cart-bottom-title section-bg-gary-cart">Cart Total</h4>
                                 </div>
-                                <h5>Total products <span>$260.00</span></h5>
+                                @php
+                                    Session::put('s_cart_total', $cart_total);
+                                    Session::put('s_discount_total', $discount_total);
+                                @endphp
+                                <h5>Cart Total <span>${{ $cart_total }}</span></h5>
+                                <h5>Discount Total (
+                                    @if ($coupon_name)
+                                        {{ $coupon_name }}
+                                    @else
+                                        N/A
+                                    @endif
+                                    ) <span>${{ $discount_total }}</span></h5>
+                                <h5>Sub Total (approx.) <span id="sub_total">{{ round($cart_total-$discount_total) }}</span><span>$</span></h5>
                                 <div class="total-shipping">
                                     <h5>Total shipping</h5>
                                     <ul>
-                                        <li><input type="checkbox" /> Standard <span>$20.00</span></li>
-                                        <li><input type="checkbox" /> Express <span>$30.00</span></li>
+                                        <li><input id="shipping_btn_1" type="radio" name="shipping" /> Standard <span>$20.00</span></li>
+                                        <li><input id="shipping_btn_2" type="radio" name="shipping" /> Express <span>$30.00</span></li>
+                                        <li><input id="shipping_btn_3" type="radio" name="shipping" /> Free Shipping <span>$00.00</span></li>
                                     </ul>
                                 </div>
-                                <h4 class="grand-totall-title">Grand Total <span>$260.00</span></h4>
-                                <a href="checkout.html">Proceed to Checkout</a>
+                                <h4 class="grand-totall-title">Grand Total <span id="grand_total">{{ round($cart_total-$discount_total) }}</span><span>$</span></h4>
+                                @if ($flag)
+                                    <div class="alert alert-danger">
+                                        Please remove stock product first
+                                    </div>
+                                @else
+                                    <a id="checkout_btn" class="d-none" href="{{ route('checkout') }}">Proceed to Checkout</a>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -169,5 +178,26 @@
         </div>
     </div>
     <!-- Cart Area End -->
+
+@endsection
+
+@section('footer_script')
+
+<script>
+$('#shipping_btn_1').click(function (){
+    $('#grand_total').html(parseInt($('#sub_total').html())+20);
+    $('#checkout_btn').removeClass('d-none');
+});
+
+$('#shipping_btn_2').click(function (){
+    $('#grand_total').html(parseInt($('#sub_total').html())+30);
+    $('#checkout_btn').removeClass('d-none');
+});
+
+$('#shipping_btn_3').click(function (){
+    $('#grand_total').html(parseInt($('#sub_total').html())+0);
+    $('#checkout_btn').removeClass('d-none');
+});
+</script>
 
 @endsection

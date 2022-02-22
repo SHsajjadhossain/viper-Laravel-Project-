@@ -4093,10 +4093,10 @@ only screen and (max-width:767px) {
     margin-top: 25px
 }
 
-.your-order-area .Place-order a {
+.your-order-area .Place-order button {
+    width: 100%;
     background-color: #fb5d5d;
     color: #fff;
-    display: block;
     font-weight: 700;
     letter-spacing: 1px;
     line-height: 1;
@@ -4107,7 +4107,7 @@ only screen and (max-width:767px) {
     z-index: 9
 }
 
-.your-order-area .Place-order a:hover {
+.your-order-area .Place-order button:hover {
     background-color: #000
 }
 
