@@ -26,6 +26,8 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/email/offer', [HomeController::class, 'emailoffer'])->name('emailoffer');
 Route::get('/single/email/offer/{id}', [HomeController::class, 'singleemailoffer'])->name('singeemailoffer');
 Route::post('/check/email/offer', [HomeController::class, 'checkemailoffer'])->name('checkemailoffer');
+Route::get('/location', [HomeController::class, 'location'])->name('location');
+Route::post('/location/update', [HomeController::class, 'location_update'])->name('location.update');
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 Route::post('/profile/name/change', [ProfileController::class, 'namechange'])->name('profile.namechange');
 Route::post('/profile/password/change', [ProfileController::class, 'passwordchange'])->name('profile.passwordchange');
@@ -46,3 +48,4 @@ Route::get('/clear/shopping/cart/{user_id}', [CartController::class, 'clearshopp
 Route::post('/cart/update', [CartController::class, 'cartupdate'])->name('cartupdate');
 Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
 Route::post('/checkout', [CheckoutController::class, 'checkout_post'])->name('checkout_post');
+Route::post('/get/city/list', [CheckoutController::class, 'get_city_list'])->name('get_city_list');

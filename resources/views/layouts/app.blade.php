@@ -17,6 +17,7 @@
     <link href="{{ asset('dashboard/assets/css/icons.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('dashboard/assets/css/metismenu.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('dashboard/assets/css/style.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('dashboard/assets/plugins/select2/css/select2.min.css') }}">
 
     <script src="{{ asset('dashboard/assets/js/modernizr.min.js') }}"></script>
 
@@ -54,11 +55,11 @@
                     <h5><a href="#">{{ Auth::user()->name }}</a> </h5>
                     <p class="text-muted">
                         @if ((auth()->user()->role == 1))
-                            Customer
+                        Customer
                         @elseif ((auth()->user()->role == 2))
-                            Admin
+                        Admin
                         @else
-                            Vendor
+                        Vendor
                         @endif
                     </p>
                 </div>
@@ -85,8 +86,8 @@
                         @if (auth()->user()->role == 2)
 
                         <li>
-                            <a href="javascript: void(0);"><i class="fa fa-user" aria-hidden="true"></i><span> Vendor </span> <span
-                                    class="menu-arrow"></span></a>
+                            <a href="javascript: void(0);"><i class="fa fa-user" aria-hidden="true"></i><span> Vendor
+                                </span> <span class="menu-arrow"></span></a>
                             <ul class="nav-second-level" aria-expanded="false">
                                 <li><a href="{{ route('vendor.create') }}">Add Vendor</a></li>
                                 <li><a href="{{ route('vendor.index') }}">List Vendor</a></li>
@@ -94,8 +95,8 @@
                         </li>
 
                         <li>
-                            <a href="javascript: void(0);"><i class="fa fa-list-alt" aria-hidden="true"></i><span> Coupon </span> <span
-                                    class="menu-arrow"></span></a>
+                            <a href="javascript: void(0);"><i class="fa fa-list-alt" aria-hidden="true"></i><span>
+                                    Coupon </span> <span class="menu-arrow"></span></a>
                             <ul class="nav-second-level" aria-expanded="false">
                                 <li><a href="{{ route('coupon.create') }}">Add Coupon</a></li>
                                 <li><a href="{{ route('coupon.index') }}">List Coupon</a></li>
@@ -112,6 +113,11 @@
                         </li>
 
                         <li>
+                            <a href="{{ route('location') }}">
+                                <i class="fa fa-map-marker" aria-hidden="true"></i> <span> Location </span>
+                            </a>
+                        </li>
+                        <li>
                             <a href="{{ route('emailoffer') }}">
                                 <i class="fa fa-envelope"></i> <span> Email Offer </span>
                             </a>
@@ -122,8 +128,8 @@
                         @if (auth()->user()->role == 3)
 
                         <li>
-                            <a href="javascript: void(0);"><i class="fa fa-user" aria-hidden="true"></i><span> Product </span> <span
-                                    class="menu-arrow"></span></a>
+                            <a href="javascript: void(0);"><i class="fa fa-user" aria-hidden="true"></i><span> Product
+                                </span> <span class="menu-arrow"></span></a>
                             <ul class="nav-second-level" aria-expanded="false">
                                 <li><a href="{{ route('product.create') }}">Add Product</a></li>
                                 <li><a href="{{ route('product.index') }}">List Product</a></li>
@@ -329,8 +335,8 @@
                         <li class="dropdown notification-list">
                             <a class="nav-link dropdown-toggle nav-user" data-toggle="dropdown" href="#" role="button"
                                 aria-haspopup="false" aria-expanded="false">
-                                <img src="{{ asset('uploads/profile_photoes').'/'.Auth::user()->profile_photo }}" alt="user"
-                                    class="rounded-circle"> <span class="ml-1">{{ Auth::user()->name }} <i
+                                <img src="{{ asset('uploads/profile_photoes').'/'.Auth::user()->profile_photo }}"
+                                    alt="user" class="rounded-circle"> <span class="ml-1">{{ Auth::user()->name }} <i
                                         class="mdi mdi-chevron-down"></i> </span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated profile-dropdown ">
@@ -414,29 +420,30 @@
     <script src="{{ asset('dashboard/assets/js/waves.js') }}"></script>
     <script src="{{ asset('dashboard/assets/js/jquery.slimscroll.js') }}"></script>
 
-     <!-- Flot chart -->
-        <script src="{{ asset('dashboard/assets/plugins/flot-chart/jquery.flot.min.js') }}"></script>
-        <script src="{{ asset('dashboard/assets/plugins/flot-chart/jquery.flot.time.js') }}"></script>
-        <script src="{{ asset('dashboard/assets/plugins/flot-chart/jquery.flot.tooltip.min.js') }}"></script>
-        <script src="{{ asset('dashboard/assets/plugins/flot-chart/jquery.flot.resize.js') }}"></script>
-        <script src="{{ asset('dashboard/assets/plugins/flot-chart/jquery.flot.pie.js') }}"></script>
-        <script src="{{ asset('dashboard/assets/plugins/flot-chart/jquery.flot.crosshair.js') }}"></script>
-        <script src="{{ asset('dashboard/assets/plugins/flot-chart/curvedLines.js') }}"></script>
-        <script src="{{ asset('dashboard/assets/plugins/flot-chart/jquery.flot.axislabels.js') }}"></script>
+    <!-- Flot chart -->
+    <script src="{{ asset('dashboard/assets/plugins/flot-chart/jquery.flot.min.js') }}"></script>
+    <script src="{{ asset('dashboard/assets/plugins/flot-chart/jquery.flot.time.js') }}"></script>
+    <script src="{{ asset('dashboard/assets/plugins/flot-chart/jquery.flot.tooltip.min.js') }}"></script>
+    <script src="{{ asset('dashboard/assets/plugins/flot-chart/jquery.flot.resize.js') }}"></script>
+    <script src="{{ asset('dashboard/assets/plugins/flot-chart/jquery.flot.pie.js') }}"></script>
+    <script src="{{ asset('dashboard/assets/plugins/flot-chart/jquery.flot.crosshair.js') }}"></script>
+    <script src="{{ asset('dashboard/assets/plugins/flot-chart/curvedLines.js') }}"></script>
+    <script src="{{ asset('dashboard/assets/plugins/flot-chart/jquery.flot.axislabels.js') }}"></script>
 
-        <!-- KNOB JS -->
-        <!--[if IE]>
+    <!-- KNOB JS -->
+    <!--[if IE]>
         <script type="text/javascript" src="../plugins/jquery-knob/excanvas.js"></script>
         <![endif]-->
-        <script src="{{ asset('dashboard/assets/plugins/jquery-knob/jquery.knob.js') }}"></script>
+    <script src="{{ asset('dashboard/assets/plugins/jquery-knob/jquery.knob.js') }}"></script>
 
-        <!-- Dashboard Init -->
-        <script src="{{ asset('dashboard/assets/pages/jquery.dashboard.init.js') }}"></script>
+    <!-- Dashboard Init -->
+    <script src="{{ asset('dashboard/assets/pages/jquery.dashboard.init.js') }}"></script>
 
 
     <!-- App js -->
     <script src="{{ asset('dashboard/assets/js/jquery.core.js') }}"></script>
     <script src="{{ asset('dashboard/assets/js/jquery.app.js') }}"></script>
+    <script src="{{ asset('dashboard/assets/plugins/select2/js/select2.min.js') }}"></script>
     @yield('footer_script')
 
 </body>

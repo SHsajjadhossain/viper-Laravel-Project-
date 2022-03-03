@@ -1,5 +1,10 @@
 @extends('layouts.app_frontend')
 @section('content')
+<style>
+    .checkout_error{
+        border: 1px solid #dc3545 !important;
+    }
+</style>
 <!-- breadcrumb-area start -->
 <div class="breadcrumb-area">
     <div class="container">
@@ -45,14 +50,17 @@
                             <div class="col-lg-12">
                                 <div class="billing-info mb-4">
                                     <label>Phone Number</label>
-                                    <input type="number" name="phone_number">
+                                    <input type="number" @error('phone_number') class="checkout_error" @enderror  name="phone_number" >
+                                    @error('phone_number')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="billing-select mb-4">
                                     <label>Country</label>
                                     <select name="country" id="country_dropdown">
-                                        <option value="">Select a country</option>
+                                        <option value="">-Select a country-</option>
                                         @foreach ($countries as $country)
                                         <option value="{{ $country->id }}">{{$country->name}}</option>
                                         @endforeach
@@ -60,13 +68,8 @@
                                 </div>
                                 <div class="billing-select mb-4">
                                     <label>City</label>
-                                    <select name="city">
-                                        <option>Select a country</option>
-                                        <option>Azerbaijan</option>
-                                        <option>Bahamas</option>
-                                        <option>Bahrain</option>
-                                        <option>Bangladesh</option>
-                                        <option>Barbados</option>
+                                    <select name="city" id="city_dropdown" disabled>
+                                        <option value="">-Please select country first-</option>
                                     </select>
                                 </div>
                             </div>
@@ -219,6 +222,26 @@
 <script>
     $(document).ready(function() {
     $('#country_dropdown').select2();
+    $('#country_dropdown').change(function () {
+        var country_id = $(this).val();
+        $('#city_dropdown').attr('disabled', false);
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            type : 'POST',
+            url : '/get/city/list',
+            data : { country_id:country_id },
+            success : function (data){
+                $('#city_dropdown').html(data);
+            }
+        });
+    });
+
+    $('#city_dropdown').select2();
 });
 </script>
 @endsection

@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\EmailOffer;
+use App\Models\Country;
 
 class HomeController extends Controller
 {
@@ -53,6 +54,27 @@ class HomeController extends Controller
     {
         foreach ($request->check as $id) {
             Mail::to(User::find($id)->email)->send(new EmailOffer());
+        }
+        return back();
+    }
+
+    public function location ()
+    {
+        return view('location.index', [
+            'countries' => Country::get(['id', 'name', 'status'])
+        ]);
+    }
+
+    public function location_update (Request $request)
+    {
+        Country::where('status', 'active')->update([
+            'status' => 'deactive'
+        ]);
+
+        foreach ($request->countries as $country_id) {
+            Country::find($country_id)->update([
+                'status' => 'active'
+            ]);
         }
         return back();
     }
