@@ -93,9 +93,15 @@
                                             </td>
                                         </tr>
                                     @empty
+                                    @if (session('final_success'))
+                                        <tr>
+                                            <td class="alert alert-success" colspan="50">{{ session('final_success') }}</td>
+                                        </tr>
+                                    @else
                                         <tr>
                                             <td class="text-danger text-center" colspan="50">Your cart is empty</td>
                                         </tr>
+                                    @endif
                                     @endforelse
                                 </tbody>
                             </table>
@@ -142,6 +148,12 @@
                                     <h4 class="cart-bottom-title section-bg-gary-cart">Cart Total</h4>
                                 </div>
                                 @php
+                                    if ($coupon_name) {
+                                        Session::put('s_coupon_name', $coupon_name);
+                                    }
+                                    else {
+                                        Session::put('s_coupon_name', '');
+                                    }
                                     Session::put('s_cart_total', $cart_total);
                                     Session::put('s_discount_total', $discount_total);
                                 @endphp

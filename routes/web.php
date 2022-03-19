@@ -5,6 +5,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\{CheckoutController, ProfileController, CategoryController, FrontendController, VendorController, ProductController, WishlistController, CartController, CouponController};
 use Illuminate\Support\Facades\Auth;
 
+use App\Http\Controllers\SslCommerzPaymentController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -49,3 +51,18 @@ Route::post('/cart/update', [CartController::class, 'cartupdate'])->name('cartup
 Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
 Route::post('/checkout', [CheckoutController::class, 'checkout_post'])->name('checkout_post');
 Route::post('/get/city/list', [CheckoutController::class, 'get_city_list'])->name('get_city_list');
+
+
+// SSLCOMMERZ Start
+Route::get('/example1', [SslCommerzPaymentController::class, 'exampleEasyCheckout']);
+Route::get('/example2', [SslCommerzPaymentController::class, 'exampleHostedCheckout']);
+
+Route::get('/pay', [SslCommerzPaymentController::class, 'index']);
+Route::post('/pay-via-ajax', [SslCommerzPaymentController::class, 'payViaAjax']);
+
+Route::post('/success', [SslCommerzPaymentController::class, 'success']);
+Route::post('/fail', [SslCommerzPaymentController::class, 'fail']);
+Route::post('/cancel', [SslCommerzPaymentController::class, 'cancel']);
+
+Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
+//SSLCOMMERZ END

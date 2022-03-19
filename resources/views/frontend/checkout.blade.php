@@ -28,12 +28,19 @@
 <!-- checkout area start -->
 <div class="checkout-area pt-100px pb-100px">
     <div class="container">
-        <form action="" method="POST">
+        <form action="{{ route('checkout_post') }}" method="POST">
             @csrf
             <div class="row">
                 <div class="col-lg-7">
                     <div class="billing-info-wrap">
                         <h3>Billing Details</h3>
+                        @if ($errors->any())
+                        <div class="alert alert-danger">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </div>
+                        @endif
                         <div class="row">
                             <div class="col-lg-6 col-md-6">
                                 <div class="billing-info mb-4">
@@ -130,7 +137,7 @@
                                         <li>${{ Session::get('s_cart_total') }}</li>
                                     </ul>
                                     <ul>
-                                        <li class="your-order-shipping">Discount Total </li>
+                                        <li class="your-order-shipping">Discount Total ({{Session::get('s_coupon_name')}}) </li>
                                         <li>${{ Session::get('s_discount_total') }}</li>
                                     </ul>
                                     <ul>
@@ -149,7 +156,7 @@
                                 <div class="your-order-total">
                                     <ul>
                                         <li class="order-total">Grand Total</li>
-                                        <li>${{ round(Session::get('s_cart_total')-Session::get('s_discount_total'))-Session::get('s_shipping') }}
+                                        <li>${{ round(Session::get('s_cart_total')-Session::get('s_discount_total'))+Session::get('s_shipping') }}
                                         </li>
                                     </ul>
                                 </div>
@@ -157,7 +164,12 @@
                             <div class="payment-method">
                                 <div class="payment-accordion element-mrg">
                                     <div id="faq" class="panel-group">
-                                        <div class="panel panel-default single-my-account m-0">
+                                        <ul>
+                                            <li class="payment_gateway">Payment Option</li>
+                                            <li><input id="payment_1" type="radio" name="payment_option" value="1" /> Cash on delivery (COD) </li>
+                                            <li><input id="payment_2" type="radio" name="payment_option" value="2" /> Onlile payment </li>
+                                        </ul>
+                                        {{-- <div class="panel panel-default single-my-account m-0">
                                             <div class="panel-heading my-account-title">
                                                 <h4 class="panel-title"><a data-bs-toggle="collapse"
                                                         href="#my-account-1" class="collapsed"
@@ -201,7 +213,7 @@
                                                         Store State / County, Store Postcode.</p>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                             </div>
