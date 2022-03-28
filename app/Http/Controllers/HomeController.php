@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\EmailOffer;
 use App\Models\Country;
+use App\Models\Order_summery;
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Exports\Order_summeryExport;
+use App\Models\Order_detail;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Crypt;
 
 class HomeController extends Controller
 {
@@ -77,6 +83,50 @@ class HomeController extends Controller
             ]);
         }
         return back();
+    }
+
+    public function myorders  ()
+    {
+        return view('myorders.index', [
+            'order_summeries' => Order_summery::where('user_id', auth()->id())->get()
+        ]);
+    }
+
+    public function invoicedownload   ()
+    {
+        $pdf = PDF::loadView('pdf.invoice');
+        return $pdf->stream('invoice.pdf');
+    }
+
+    public function invoicedownloadexcel ()
+    {
+        return Excel::download(new Order_summeryExport, 'Order_summery.xlsx');
+    }
+
+    public function orderdetails ($id)
+    {
+        $order_summeries = Order_summery::find(Crypt::decryptString($id));
+        $order_details = Order_detail::where('order_summery_id', Crypt::decryptString($id))->get();
+        return view('myorders.orderdetails', compact('order_summeries', 'order_details'));
+    }
+    public function allorders ()
+    {
+        return view('allorders.index', [
+            'order_summeries' => Order_summery::all()
+        ]);
+    }
+
+    public function markasrecieved ($id)
+    {
+        Order_summery::find($id)->update([
+            'deliver_status' => 1
+        ]);
+        return back();
+    }
+    public function rating (Request $request, $id)
+    {
+        return $id;
+        return $request->except('_token');
     }
 
 }

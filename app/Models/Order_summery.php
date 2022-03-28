@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Order_summery extends Model
 {
     use HasFactory;
+    protected $fillable = ['deliver_status'];
+    function relationwithuser(){
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

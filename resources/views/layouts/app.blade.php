@@ -117,6 +117,12 @@
                                 <i class="fa fa-map-marker" aria-hidden="true"></i> <span> Location </span>
                             </a>
                         </li>
+
+                        <li>
+                            <a href="{{ route('all.orders') }}">
+                                <i class="fa fa-shopping-cart" aria-hidden="true"></i> <span> All Orders </span>
+                            </a>
+                        </li>
                         <li>
                             <a href="{{ route('emailoffer') }}">
                                 <i class="fa fa-envelope"></i> <span> Email Offer </span>
@@ -135,6 +141,18 @@
                                 <li><a href="{{ route('product.index') }}">List Product</a></li>
                             </ul>
                         </li>
+                        @endif
+
+                        @if (auth()->user()->role == 1)
+
+                        <li>
+                            <a href="javascript: void(0);"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span> My Orders
+                                </span> <span class="menu-arrow"></span></a>
+                            <ul class="nav-second-level" aria-expanded="false">
+                                <li><a href="{{ route('my.orders') }}">List Orders</a></li>
+                            </ul>
+                        </li>
+
                         @endif
 
                         <li>

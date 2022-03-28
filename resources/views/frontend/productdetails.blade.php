@@ -75,8 +75,9 @@
                         <p class="mt-30px mb-0">{{ $single_product_info->product_short_description }}</p>
 
 
-                            <form action="{{ route('addtocart', $single_product_info->id) }}" method="POST">
-                                @csrf
+
+                                <form action="{{ route('addtocart', $single_product_info->id) }}" method="POST">
+                                    @csrf
                                 <div class="pro-details-quality">
                                     <div class="cart-plus-minus">
                                         <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1" />
@@ -85,7 +86,7 @@
                                         <button class="add-cart" type="submit"> Add To
                                         Cart</button>
                                     </div>
-                            </form>
+                                </form>
 
 
 

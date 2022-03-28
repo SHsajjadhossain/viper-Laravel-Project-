@@ -30,6 +30,14 @@ Route::get('/single/email/offer/{id}', [HomeController::class, 'singleemailoffer
 Route::post('/check/email/offer', [HomeController::class, 'checkemailoffer'])->name('checkemailoffer');
 Route::get('/location', [HomeController::class, 'location'])->name('location');
 Route::post('/location/update', [HomeController::class, 'location_update'])->name('location.update');
+Route::get('/my/orders', [HomeController::class, 'myorders'])->name('my.orders');
+Route::get('/invoice/download', [HomeController::class, 'invoicedownload'])->name('invoice.download');
+Route::get('/invoice/download/excel', [HomeController::class, 'invoicedownloadexcel'])->name('invoice.download.excel');
+Route::get('/order/details/{id}', [HomeController::class, 'orderdetails'])->name('order.details');
+Route::get('/all/orders', [HomeController::class, 'allorders'])->name('all.orders');
+Route::get('/mark/as/recieved/{id}', [HomeController::class, 'markasrecieved'])->name('mark.as.recieved');
+Route::post('/rating/{id}', [HomeController::class, 'rating'])->name('rating');
+
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 Route::post('/profile/name/change', [ProfileController::class, 'namechange'])->name('profile.namechange');
 Route::post('/profile/password/change', [ProfileController::class, 'passwordchange'])->name('profile.passwordchange');
